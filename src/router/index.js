@@ -14,11 +14,11 @@ export default function AppRouter() {
           path={item.path}
           key={item.path}
           element={
-            item.path === exPath && item.auth && !isLogin ? (
-              <Navigate to="/login" replace={true}></Navigate>
-            ) : (
+            // item.path === exPath && item.auth && !isLogin ? (
+            //   <Navigate to="/login" replace={true}></Navigate>
+            // ) : (
               item.element
-            )
+            // )
           }
         >
           {item?.child && RouteNav(item.child)}
