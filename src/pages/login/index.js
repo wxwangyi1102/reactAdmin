@@ -15,13 +15,13 @@ export default function Login() {
     />
   );
   // 登陆
-  // openAuth(
-  //   sdkConfig,
-  //   () => wxworkLogin(wxworkParams),
-  //   () => uniteLogin(uniteParams),
-  //   (e) => {
-  //     console.log(e, 'e');
-  //   },
-  // );
+  openAuth(
+    sdkConfig,
+    () => wxworkLogin(wxworkParams),
+    () => uniteLogin(uniteParams),
+    (e) => {
+      console.log(e, 'e');
+    },
+  );
   return <Spin indicator={antIcon} />;
 }

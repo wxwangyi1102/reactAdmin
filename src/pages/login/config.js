@@ -1,5 +1,5 @@
-import { get, post } from '../utils/http';
-export const { version } = require('../../package.json');
+import { get, post } from '../../utils/http';
+export const { version } = require('../../../package.json');
 
 export const sdkConfig = {
   serverUrl: 'https://passport.osisbim.com',

@@ -10,8 +10,6 @@ yarn-error.log
 package-lock.json
 # testing
 /coverage
-/src/pages
-/src/layout
 
 # production
 /build

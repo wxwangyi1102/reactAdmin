@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { loginUser } from '../cookie';
-//这是使用代理的路径，如果你想了解的话可以看我之前的文章或者~~问我
 let baseUrl = '/api';
 // 创建axios实例，在这里可以设置请求的默认配置
 const instance = axios.create({
@@ -16,7 +14,7 @@ const instance = axios.create({
 /** 添加请求拦截器 **/
 instance.interceptors.request.use(
   (config) => {
-    var token = loginUser(); //获取你登录时存储的token
+    const token = localStorage.getItem('access-token');
     // 判断cookie有没有存储token，有的话加入到请求头里
     if (token) {
       config.headers['token'] = token; //在请求头中加入token

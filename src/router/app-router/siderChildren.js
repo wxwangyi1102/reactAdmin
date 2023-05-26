@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import Home from '../../pages/home';
-import Table from '../..//pages/table';
+import SystemConfiguation from '../../pages/system-configuration';
 export const siderChildren = [
   // 占位路由
   {
@@ -18,6 +18,6 @@ export const siderChildren = [
     name: '系统配置',
 
     auth: false,
-    element: <Table />,
+    element: <SystemConfiguation />,
   },
 ];

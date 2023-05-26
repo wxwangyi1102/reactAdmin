@@ -1,6 +1,5 @@
 import { Navigate } from 'react-router-dom';
 import Layout from '../../layout';
-import Login from '../..//pages/login';
 import ErrPage from '../..//pages/error';
 import { siderChildren } from './siderChildren';
 
@@ -10,11 +9,6 @@ export const routes = [
     auth: false,
     element: <Layout />,
     child: siderChildren,
-  },
-  {
-    path: '/login',
-    auth: false,
-    element: <Login />,
   },
   {
     path: '/errPage',

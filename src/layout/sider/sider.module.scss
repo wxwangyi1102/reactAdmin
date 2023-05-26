@@ -1,0 +1,50 @@
+.container {
+  width: 18.67rem;
+  height: 100%;
+  text-align: left;
+  background-color: #f9f9fa;
+  display: flex;
+  flex-direction: column;
+}
+.body {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 1rem 0.67rem 0;
+  .item {
+    &:hover{
+      cursor: pointer;
+      background-color: #ECEBEF;
+    }
+    width: 17.33rem;
+    height: 3.67rem;
+    border-radius: 0.33rem;
+    margin-top: 0.33rem;
+    background-color: #F9F9FA;
+    box-sizing: border-box;
+    padding: 0.9rem 0 1.17rem 0;
+    display: flex;
+    justify-content: space-between;
+    .icon {
+      margin: 0 2rem;
+      pointer-events: none;
+      div {
+        width: 2rem;
+        display: inline-block;
+        img {
+          width: 1.33rem;
+          height: 1.33rem;
+          transform: translateY(0.23rem);
+        }
+      }
+      span {
+        height: 1.67rem;
+        font-size: 1.17rem;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #000000;
+      }
+    }
+    .icon_right {
+    }
+  }
+}

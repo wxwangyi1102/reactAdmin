@@ -1,0 +1,12 @@
+.container {
+  text-align: left;
+  height: 100vmin;
+}
+
+.body {
+  display: flex;
+  height: calc(100% - 4.67rem);
+  &:last-child {
+    flex: 1;
+  }
+}

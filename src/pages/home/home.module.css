@@ -1,0 +1,14 @@
+.container {
+  height: 100%;
+  width: 100%;
+  margin: 5 auto;
+  box-sizing: border-box;
+  padding: 2rem 4rem;
+}
+.status {
+  margin-left: 2rem;
+  text-align: left;
+}
+.status > span {
+  margin-left: 2rem;
+}
