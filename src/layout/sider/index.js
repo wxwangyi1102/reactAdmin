@@ -1,55 +1,107 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { siderChildren as silders } from '../../router/app-router/siderChildren';
-import { getLastPath } from '../../utils';
-import icons from '../../assets/icons/1.png';
-import styles from './sider.module.scss';
-export default function Sider() {
+import { cloneDeep } from 'lodash';
+import { siderChildren } from '../../router/app-router/siderChildren';
+import { addPreFixWithMenus, searchItemWithTree } from '../../utils';
+import { onChooseIcon } from '../../utils/icons';
+import styles from './index.module.scss';
+
+// 调整路由path结构--
+const defaultMenus = addPreFixWithMenus(cloneDeep(siderChildren));
+
+export default function Sider({ child, show = true }) {
+  const menus = child?.children || defaultMenus;
+  // 控制菜单显示
+  const [isShow, setIsShow] = useState(false);
+  // 设置当前级别菜单选中
+  const [expandName, setExpandName] = useState('');
+
   const navigate = useNavigate();
-  // 激活选项卡
-  const onGetItemStyle = (path) => {
-    return getLastPath(window.location) === path
-      ? {
-          backgroundColor: '#007AEB',
-        }
-      : {};
+  // 激活item背景色
+  const onGetItemStyle = (selectPath) => {
+    const curpath = window.location.pathname.slice(1);
+    return curpath === selectPath ? { backgroundColor: '#007AEB' } : {};
   };
-  const onGetSpanStyle = (path) => {
-    return getLastPath(window.location) === path
+  // 激活文字
+  const onGetSpanStyle = (selectPath) => {
+    const curpath = window.location.pathname.slice(1);
+    return curpath === selectPath
       ? {
           color: '#ffffff',
           fontFamily: 'PingFang SC - Medium, PingFang SC',
         }
       : {};
   };
-  // 跳转/折叠
-  const handleToLink = (event) => {
-    const { name } = event.target.dataset;
-    if (!name) return;
-    const { path } = silders.find((item) => name.indexOf(item.name) !== -1);
-    path && navigate(path);
+  // 查找当前路径对应的菜单数据(默认通过name)
+  const searchCurPathOfMenus = (name, field = 'name') => {
+    const searchItem = searchItemWithTree(menus, name, field);
+    return searchItem;
   };
+  // 默认选中
+  const defaultSelect = () => {
+    const { pathname } = window.location;
+    const { name } = searchCurPathOfMenus(pathname.slice(1), 'path') || {};
+    if (!name) return;
+    setExpandName(name);
+  };
+  // 动作 跳转/折叠
+  const handleToLink = (event) => {
+    event.stopPropagation(); // 组织冒泡
+    const { item } = event.target.dataset;
+    if (!item) return;
+    const { name, children } = (item && JSON.parse(item)) || {};
+    // 设置单个side选中项
+    setExpandName(name);
+    const isLeaf = children && children.length;
+    // 父节点则展开
+    if (isLeaf) {
+      setIsShow(!isShow);
+      return;
+    }
+    // 根据name查找数据--末级节点，切换路由
+    const { path } = searchCurPathOfMenus(name) || {};
+    // 跳转则折起当前级别节点
+    if (path) {
+      setIsShow(false);
+      navigate(path);
+    }
+  };
+  // 刷新时
+  useEffect(() => {
+    // 作用，刷新后可以回到菜单里面（非完善）
+    defaultSelect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
-    <div className={styles.container}>
-      <div className={styles.body} onClick={(e) => handleToLink(e)}>
-        {silders
-          .filter((v) => v.path)
-          .map((item) => (
-            <div
-              style={onGetItemStyle(item.path)}
-              className={styles.item}
-              data-name={item.name}
-              key={item.path}
-            >
-              <div className={styles.icon}>
-                <div>
-                  <img alt={item.name} src={icons} />
-                </div>
-                <span style={onGetSpanStyle(item.path)}>{item.name} </span>
-              </div>
-              <div className={styles.icon_right}>下</div>
+    <div
+      className={styles.container}
+      style={{ display: show ? 'block' : 'none' }}
+      onClick={(e) => handleToLink(e)}
+    >
+      {menus
+        .filter((v) => v.path)
+        .map((item) => (
+          <div
+            style={onGetItemStyle(item.path)}
+            className={styles.item}
+            key={item.path}
+            data-item={JSON.stringify(item)}
+          >
+            <div className={styles.icon}>
+              <div>{item.icon && <img alt={item.name} src={onChooseIcon(item.icon)} />}</div>
+              <span style={onGetSpanStyle(item.path)}>{item.name} </span>
             </div>
-          ))}
-      </div>
+            {/* 展开箭头 */}
+            <div
+              style={{ opacity: item?.children && item.children.length ? 1 : 0 }}
+              className={styles.icon_right}
+            >
+              <img alt={item.name} src={onChooseIcon(expandName !== item.name ? 'up' : 'down')} />
+            </div>
+            {/* 二级菜单--地柜组件必须携带条件 */}
+            {item?.children && <Sider child={item} show={isShow} />}
+          </div>
+        ))}
     </div>
   );
 }

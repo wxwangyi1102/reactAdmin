@@ -5,12 +5,16 @@ import styles from './index.module.scss';
 
 export default function Layout() {
   return (
-    <div className={styles.container}>
+    <>
       <Header />
-      <div className={styles.body}>
-        <Sider />
-        <Outlet />
+      <div className={styles.container}>
+        <div>
+          <Sider />
+        </div>
+        <div>
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

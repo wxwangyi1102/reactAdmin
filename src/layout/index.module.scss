@@ -1,12 +1,9 @@
 .container {
-  text-align: left;
-  height: 100vmin;
-}
-
-.body {
+  width: 100%;
+  height: calc(100% - 56px);
+  position: absolute;
   display: flex;
-  height: calc(100% - 4.67rem);
-  &:last-child {
+  >div:last-child {
     flex: 1;
   }
 }
