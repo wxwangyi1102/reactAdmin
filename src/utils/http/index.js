@@ -5,7 +5,7 @@ export const get = (url, params, config = {}) => {
     request({
       method: 'get',
       url,
-      params,
+      params: params || undefined,
       ...config,
     })
       .then((response) => {

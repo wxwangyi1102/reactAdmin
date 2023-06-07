@@ -8,7 +8,7 @@ export default function Header() {
         <div className={styles.icons_container}>
           <img alt="总办目标管理" src={onChooseIcon('titleLeft')} />
         </div>
-        <span className={styles.title}>总办目标管理</span>
+        <span className={['mosaic', styles.title].join(' ')}>总办目标管理</span>
       </div>
       <div className={styles.right}>
         <span>{name}</span>

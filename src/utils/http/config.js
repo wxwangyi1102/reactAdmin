@@ -1,5 +1,5 @@
 import axios from 'axios';
-let baseUrl = '/api';
+let baseUrl = '';
 // 创建axios实例，在这里可以设置请求的默认配置
 const instance = axios.create({
   timeout: 1000 * 60, // 设置超时时间10s，如果10秒没有返回结果则中断请求，认为连接超时
@@ -17,7 +17,8 @@ instance.interceptors.request.use(
     const token = localStorage.getItem('access-token');
     // 判断cookie有没有存储token，有的话加入到请求头里
     if (token) {
-      config.headers['token'] = token; //在请求头中加入token
+      // config.headers['authorization'] = `Bearer ${token}`; //在请求头中加入token
+      config.headers['token'] = token;
     }
     // 如果还需要在请求头内添加其他内容可以自己添加 "[]" 内为自定义的字段名 "=" 后的内容为字段名对应的内容
     // config.headers['自定义键'] = '自定义内容'
@@ -44,13 +45,12 @@ instance.interceptors.response.use(
     }
   },
   (error) => {
-    console.log(error, 100);
     // 请求报错的回调可以和后端协调返回什么状态码，在此根据对应状态码进行对应处理
     if (error.response) {
       // 如401我就让用户返回登录页
-      if (error.response.status === 401) {
-        this.props.history.push('/login');
-      }
+      // if (error.response.status === 401) {
+      //   this.props.history.push('/login');
+      // }
       // 比如返回报错你的页面可能会崩溃，你需要在它崩溃之前做一些操作的话，可以在这里
       return Promise.reject(error);
     } else {

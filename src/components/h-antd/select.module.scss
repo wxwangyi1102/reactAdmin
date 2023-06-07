@@ -1,0 +1,10 @@
+.container {
+  display: inline-block;
+  overflow: hidden;
+  width: 160px;
+  .select {
+    > div {
+      border: none !important;
+    }
+  }
+}

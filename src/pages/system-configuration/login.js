@@ -1,20 +1,21 @@
-import { get, post } from '../../utils/http';
-export const { version } = require('../../../package.json');
+import { openAuth, backFetchQuery } from 'oauth-teams-ts/lib';
+import { get, post } from './utils/http';
+const { version } = require('../package.json');
 
-export const sdkConfig = {
+const sdkConfig = {
   serverUrl: 'https://passport.osisbim.com',
   clientId: '390c24fdbbc52b47dae6',
   appName: 'Teams',
   organizationName: 'OSIS-Teams',
   redirectPath: '/',
 };
-export const wxworkLogin = (params) => {
+const wxworkLogin = (params) => {
   return get(`/api/wxwork/login?${JSON.stringify(params)}`);
 };
-export function uniteLogin(params) {
+function uniteLogin(params) {
   return post('/api/admin/user/auth/login', params);
 }
-export const onGetLoginParams = ({ code, state, appname }) => {
+const onGetLoginParams = ({ code, state, appname }) => {
   const wxworkParams = {
     code,
     Appid: 7,
@@ -34,3 +35,11 @@ export const onGetLoginParams = ({ code, state, appname }) => {
   };
   return { wxworkParams, uniteParams };
 };
+
+const { wxworkParams, uniteParams } = onGetLoginParams(backFetchQuery(window.location.href));
+openAuth(
+  sdkConfig,
+  () => wxworkLogin(wxworkParams),
+  () => uniteLogin(uniteParams),
+  (result, msg) => console.log(result, msg),
+);

@@ -3,7 +3,10 @@
   height: calc(100% - 56px);
   position: absolute;
   display: flex;
-  >div:last-child {
+  > div:last-child {
     flex: 1;
+    position: relative;
+    padding: 16px 24px 0;
+    // background-color: rgb(223, 235, 255);
   }
 }

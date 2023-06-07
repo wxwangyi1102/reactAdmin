@@ -22,9 +22,28 @@ export const searchItemWithTree = (list, val, n) => {
       break;
     }
     if (item.children) {
-      searchItem = searchItemWithTree(item.children, val, n);
-      break;
+      const deepItem = searchItemWithTree(item.children, val, n);
+      if (deepItem[n]) return deepItem;
     }
   }
   return searchItem;
+};
+
+/**
+ * @description
+ */
+export const treeToListWithTree = (list, pkey = null, isLeaf) => {
+  if (!list || !list.length) return;
+  let resultList = [];
+  for (let i = 0; i < list.length; i++) {
+    const { children, ...item } = list[i];
+    const isNoEmpty = children && children.length;
+    item.pkey = pkey;
+    item.isLeaf = !isNoEmpty;
+    resultList.push(item);
+    if (isNoEmpty) {
+      resultList.push(...treeToListWithTree(children, item.path, true));
+    }
+  }
+  return resultList;
 };
