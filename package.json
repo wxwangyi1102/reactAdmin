@@ -1,6 +1,6 @@
 {
-  "name": "admin-goo-web",
-  "version": "1.0.0",
+  "name": "own-world",
+  "version": "0.9.0",
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.15.3",
@@ -49,5 +49,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "html-loader": "^4.2.0",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.4",
+    "typescript": "5.0.4"
   }
 }

@@ -1,7 +1,7 @@
 import { onChooseIcon } from '../../utils/icons';
 import styles from './index.module.scss';
 export default function Header() {
-  const { name } = JSON.parse(localStorage.getItem('token'));
+  const name = '机器人18'
   return (
     <div className={styles.header}>
       <div className={styles.left}>
